@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { server } from '../../index'
+import { app } from '../../index'
 
 async function dbConnect() {
   await mongoose.connect(process.env.DB_CONN_STRING!)
     .then(() => {
-      server.emit('ok')
+      app.emit('ok')
     })
     .catch(e => console.log(e))
 } 
