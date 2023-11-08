@@ -3,14 +3,16 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-export  interface JwtKeys{
+export interface JwtSchema {
     privateKey: string;
     publicKey: string;
+    accessToken: string
 }
 
-const jwtModel = new Schema <JwtKeys>({
-    publicKey: {type: String, required:true},
-    privateKey: {type: String, required:true}
+const jwtModel = new Schema<JwtSchema>({
+    privateKey:{type:String, required:true},
+    publicKey:{type:String, required:true},
+    accessToken:{type:String, required:true}
 })
 
-export const Jwt = model<JwtKeys>('jwt', jwtModel);3
+export const Jwt = model<JwtSchema>('jwt', jwtModel)
