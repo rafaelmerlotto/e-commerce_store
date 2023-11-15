@@ -1,5 +1,6 @@
 import express from 'express'
-import {findItem,items, createItem,deleteItem, updateItem} from '../services/service'
+import {findItem,items, createItem,deleteItem, updateItem} from '../services/ArticlesService'
+
 
 
 const app = express();
@@ -29,7 +30,7 @@ app.get('/:id', async (req, res, next) => {
 //create item
 app.post('/', async (req, res) => {
     const { name, price } = req.body
-    const result = await createItem(name, price);
+    const result = await createItem(name, price, <string>process.env.ADMIN);
     if (!result) {
         res.status(404).send({ msg: 'Cannot create article', check: false })
     }
@@ -56,6 +57,7 @@ app.delete('/:id', async (req, res) => {
     }
     return res.status(200).send({ msg: result, check: true })
 })
+
 
 
 export {app}

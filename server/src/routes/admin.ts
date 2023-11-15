@@ -1,12 +1,12 @@
 import express from 'express'
-import { createAdmin, loginAdmin } from '../services/admin';
+import { createAdmin, loginAdmin } from '../services/adminService';
 import { AdminSchema } from '../models/adminModel';
 
 
 const admin = express();
 
 
-admin.post('/login/', async (req, res) => {
+admin.post('/login', async (req, res) => {
     const { email, password } = req.body
     const admin: AdminSchema| null  = await loginAdmin(email, password)
     if(email !== process.env.ADMIN || admin?.verified !== true){
@@ -20,7 +20,7 @@ admin.post('/login/', async (req, res) => {
 
 
 
-admin.post('/create/', async (req, res) => {
+admin.post('/create', async (req, res) => {
     const { email, password, verified } = req.body
     const admin = await createAdmin(email, password, verified);
     if (!admin) {

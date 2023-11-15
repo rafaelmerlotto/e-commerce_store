@@ -1,16 +1,32 @@
-import { TrgovinaSchema, Trgovina } from "../models/model";
+import { TrgovinaSchema, Trgovina } from "../models/trgovinModel";
 import dbConnect from "../config/dbConnect";
 import validateMongodb from "../utils/validateMongodb";
+import { Admin, AdminSchema } from "../models/adminModel";
+
+
+
+async function verifyAdmin(email: string): Promise <AdminSchema | null>{
+    await dbConnect();
+    const admin : AdminSchema | null = await Admin.findOne({email:email})
+    if(!admin){
+        return null
+    }
+    return admin
+}
 
 
 
 // Create item
-export async function createItem(name: string, price: number): Promise<TrgovinaSchema | null> {
+export async function createItem(name: string, price: number, emailAdmin: string): Promise<TrgovinaSchema | null> {
     await dbConnect();
     const item = new Trgovina({
         name: name,
         price: price
     })
+    const admin = await verifyAdmin(emailAdmin)
+    if(!admin){
+        return null
+    }
     return await item.save()
 }
 
@@ -37,6 +53,7 @@ export async function updateItem(_id: string, name: string, price: number): Prom
     return updateArticle
 }
 
+
 //delete item
 export async function deleteItem(_id: string): Promise<TrgovinaSchema | null> {
     await dbConnect();
@@ -44,3 +61,6 @@ export async function deleteItem(_id: string): Promise<TrgovinaSchema | null> {
     const deleteArticle = await Trgovina.findByIdAndDelete(_id)
     return deleteArticle
 }
+
+
+
