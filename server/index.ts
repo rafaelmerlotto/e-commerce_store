@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser';
-import { app } from './src/routes/articles';
+import { app } from './src/routes/store';
 import { admin } from './src/routes/admin';
 import { user } from './src/routes/user';
 

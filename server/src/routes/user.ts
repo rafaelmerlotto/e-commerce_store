@@ -1,6 +1,6 @@
 import express from 'express'
 import {User, UserSchema } from '../models/userModel';
-import { createUser, loginUser, orderList } from '../services/userService';
+import { loginUser, orderList, registerUser } from '../services/userService';
 import jwt from 'jsonwebtoken'
 import dbConnect from '../config/dbConnect';
 
@@ -40,11 +40,11 @@ user.post('/login', async (req, res) => {
 
 
 
-user.post('/create', async (req, res) => {
+user.post('/register', async (req, res) => {
     const { email, password, name, address, orders } = req.body
-    const user = await createUser(email, password, name, address, orders)
+    const user = await registerUser(email, password, name, address, orders)
     if (!user) {
-        return res.status(403).send({ msg: 'Cannot create User', check: false })
+        return res.status(403).send({ msg: 'Cannot register User', check: false })
     }
     return res.status(201).send({ msg: `Hello ${user.name}, welcome!`, check: true })
 })
@@ -54,10 +54,7 @@ user.post('/create', async (req, res) => {
 user.get('/orders/:id', async (req, res)=> {
     await dbConnect()
     const {id} = req.params
-    const {orders} = req.body
-    console.log(orders)
     const user = await orderList(id)
-    console.log(user)
     if (!user) {
         return res.status(403).send({ msg: 'Cannot find orders', check: false })
     }

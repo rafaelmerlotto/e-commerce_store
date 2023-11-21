@@ -16,7 +16,7 @@ export async function loginUser(email: string, password: string): Promise<UserSc
 }
 
 
-export async function createUser(
+export async function registerUser(
     email: string, password: string, name: string, address: string, orders: []): Promise<UserSchema | null> {
     await dbConnect();
     const passwordHash: string = bcrypt.hashSync(password, 10)

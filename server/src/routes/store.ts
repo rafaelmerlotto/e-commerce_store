@@ -1,5 +1,5 @@
 import express from 'express'
-import {findItem,items, createItem,deleteItem, updateItem} from '../services/ArticlesService'
+import {findItem,items, createItem,deleteItem, updateItem} from '../services/storeService'
 
 
 
