@@ -1,13 +1,14 @@
 import express from 'express'
-import dotenv from 'dotenv'
+import { configDotenv } from 'dotenv'
 import bodyParser from 'body-parser';
-import { app } from './src/routes/store';
-import { admin } from './src/routes/admin';
-import { user } from './src/routes/user';
+import { app } from './routes/managerStore';
+import { admin } from './routes/admin';
+import { user } from './routes/user';
 
 
-dotenv.config()
+configDotenv({ path: ".env" })
 const server = express();
+
 server.use(express.json())
 server.use(bodyParser.json())
 server.use('/app', app)
