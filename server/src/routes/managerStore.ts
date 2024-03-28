@@ -46,7 +46,8 @@ app.post('/', async (req: Request, res: Response) => {
     const admin: Admin | null  = await  checkAdmin(adminToken, email)
     if(!admin){
         return res.status(500).send({ msg: 'Cannot create article, you are not Admin', valid: false })
-    }
+    } 
+              
     if (!result) {
         return res.status(403).send({ msg: 'Cannot create article', valid: false })
     }

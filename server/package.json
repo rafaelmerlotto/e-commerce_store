@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "nodemon src/index.ts"
   },
@@ -10,14 +11,20 @@
   "author": "Rafael Merlotto",
   "license": "ISC",
   "dependencies": {
+    "@paypal/paypal-js": "^8.0.4",
     "@prisma/client": "^5.10.2",
     "@prisma/extension-accelerate": "^1.0.0",
     "@types/body-parser": "^1.19.4",
+    "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.2.0"
+    "mongodb": "^6.2.0",
+    "node-fetch": "^3.3.2",
+    "paypal-api": "^0.1.4",
+    "paypal-rest-sdk": "^1.8.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
@@ -26,7 +33,9 @@
     "@types/jsonwebtoken": "^9.0.4",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^20.8.10",
+    "@types/node-fetch": "^2.6.11",
     "@types/nodemon": "^1.19.4",
+    "@types/paypal-rest-sdk": "^1.7.9",
     "@types/validator": "^13.11.6",
     "dotenv": "^16.3.1",
     "nodemon": "^3.0.1",
