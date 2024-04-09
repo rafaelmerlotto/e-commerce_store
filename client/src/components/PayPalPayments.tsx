@@ -44,7 +44,7 @@ export const PayPalPayments = () => {
         })
 
         if (res.ok) {
-            const data = await res.json();
+            const data: any = await res.json();
             console.log(data)
             setPayer(data.purchase_units[0].shipping.name)
             setPayment(data.purchase_units[0].payments.captures[0])
@@ -55,28 +55,24 @@ export const PayPalPayments = () => {
 
     }
 
- console.log(amount)
 
     return (
-        <div className='h-full w-full bg-primary flex justify-center items-start mt-7'>
+        <div className='h-full w-full bg-primary flex  justify-center items-start mt-7'>
 
             <PayPalScriptProvider options={{ clientId: "AfZf3RvxGcuNnw-Uo16qj3_kyBI0HRKxGM2Rg0FTzW3iMLgEu-CuaNhMVXHf4UMu8eeainvI7gxOjB5M", currency: "USD", intent: "capture", }}>
                 {loading ? <Succesfully full_name={payer.full_name} create_time={payment.create_time} amount={amount.value} id={payment.id} status={status.status} currency_code={amount.currency_code} /> :
-                    <PayPalButtons
-                        className='rounded bg-primary w-2/4'
-                        createOrder={(data, actions) => createOrder(data, actions)}
-                        onApprove={(data, actions) => onApprove(data, actions)}
-                    />
+                    <>
+                        <PayPalButtons
+                            className='rounded bg-primary w-2/4'
+                            createOrder={(data, actions) => createOrder(data, actions)}
+                            onApprove={(data, actions) => onApprove(data, actions)}
+                        />
+                    </>
                 }
-
-
             </PayPalScriptProvider>
-
+            {/* <Link to={"/"}><ArrowBackIcon className='text-secondary m-9-' /></Link> */}
         </div>
-
-
     )
-
 }
 
 interface DataUser {

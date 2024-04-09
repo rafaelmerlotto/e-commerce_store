@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { PayPalPayments } from './components/PayPalPayments';
+import { AuthProvider } from './auth/auth';
 
 ReactDOM.render(
   <React.StrictMode>  
-       <App /> 
+    <AuthProvider>
+      <App /> 
+    </AuthProvider>   
   </React.StrictMode>,
   (document.getElementById('root'))
 );

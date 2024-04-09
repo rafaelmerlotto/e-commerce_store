@@ -9,8 +9,11 @@ export default function Checkout() {
     return (
      
           <div className='w-full h-screen bg-primary flex justify-center items-start'>
-           
-          <PayPalPayments  />
+           <Header/>
+           <div className='mt-[100px]'>
+            <PayPalPayments  />
+           </div>
+          
          
           
         </div>
