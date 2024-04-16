@@ -6,6 +6,8 @@ import { admin } from './routes/admin';
 import { user } from './routes/user';
 import { payment } from './payment/paymentController';
 import cors from "cors"
+import { userNotRegistred } from './routes/userNotRegistred';
+import { userRegistred } from './routes/userRegistred';
 
 
 configDotenv({ path: ".env" })
@@ -18,6 +20,8 @@ server.use('/app', app)
 server.use('/admin', admin)
 server.use('/user', user)
 server.use('/payment', payment)
+server.use('/userRegistred', userRegistred)
+server.use('/userNotRegistred', userNotRegistred)
 
 
 

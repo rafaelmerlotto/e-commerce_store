@@ -13,20 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin{
-   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  email         String   @unique
-  password      String
-  adminToken String   @unique
+model Admin {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String @unique
+  password   String
+  adminToken String @unique
 }
 
 model User {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   email    String   @unique
   password String
-  fulName  String
+  fullName  String
   jwt      JwtKey[]
+  userRegistred UserRegistred[]
 }
 
 model Store {
@@ -44,4 +45,34 @@ model JwtKey {
   userId      String @unique @db.ObjectId
 
   @@unique([id, userId])
+}
+
+model UserRegistred {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  requestId     String @unique
+  email         String
+  name          String
+  surname       String
+  country       String
+  postCode      String
+  stateProvince String
+  city          String
+  address       String
+  tel           String
+    user        User   @relation(fields: [userId], references: [id])
+  userId      String @unique @db.ObjectId
+}
+
+model UserNotRegistred {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  requestId     String @unique
+  email         String
+  name          String
+  surname       String
+  country       String
+  postCode      String
+  stateProvince String
+  city          String
+  address       String
+  tel           String
 }

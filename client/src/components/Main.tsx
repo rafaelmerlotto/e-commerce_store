@@ -4,6 +4,7 @@ import { Link, NavigateFunction, useNavigate } from 'react-router-dom'
 import Loading from './Loading'
 import { useAuth } from '../auth/auth';
 import { v4 as uuidv4 } from 'uuid';
+import { authserviceUserNotRegistred } from '../api';
 
 export default function Main() {
 
@@ -13,7 +14,6 @@ export default function Main() {
     const { token } = useAuth()
 
     const generateHost = () => {
-
         const host = localStorage.setItem("host", uuidv4())
         return host;
     }
@@ -25,12 +25,11 @@ export default function Main() {
         setTimeout(() => {
             generateHost();
             if (token) {
-               navigate("/checkout")
-            }else{
+                navigate("/user/info")
+            } else {
                 navigate("/login")
             }
-              
-           
+            
             setLoading(false)
         }, 1000);
     }

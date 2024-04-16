@@ -28,15 +28,13 @@ export default function Login() {
             localStorage.setItem('token', token)
             return navigate("/")
         }
-
     }, [token, verifyHost])
+
 
     const handleNavigate = () => {
         if (verifyHost) {
-            console.log("hi")
-            return navigate("/checkout")
+            return navigate("/info")
         }
-
     }
 
 
@@ -47,12 +45,12 @@ export default function Login() {
             <Header />
             <form onSubmit={handleSubmit(onSubmit)} className='h-[400px] w-[300px] bg-secondary flex flex-col justify-center items-center gap-5 mt-[100px] rounded-ss-[60px]'>
                 <p className='text-secondary bg-black p-2 rounded-ss-[30px]'>Basi Bag</p>
-                <input type="email" {...register("email")} className='w-[80%] h-[40px] bg-primary rounded text-secondary text-sm' />
-                <input type="password" {...register("password")} className='w-[80%] h-[40px] bg-primary rounded text-secondary text-sm' />
+                <input type="email" {...register("email", {required:true})}  placeholder=' Email' className='w-[80%] h-[40px] bg-primary rounded text-secondary text-sm' />
+                <input type="password" {...register("password", {required:true})} placeholder=' Password' className='w-[80%] h-[40px] bg-primary rounded text-secondary text-sm' />
                 <button className='text-green-500' type='submit'>Log in</button>
                 {verifyHost ? <button className='text-black-500' onClick={handleNavigate}>Continue without login</button> : ""}
 
-                <p className='text-sm mt-8'> Not registed? <button className='text-[16px] text-blue-500' type='submit'>Sign in</button></p>
+                <p className='text-sm mt-8'> Not registed? <button onClick={() => navigate("/register")} className='text-[16px] text-blue-500' type='submit'>Sign in</button></p>
 
             </form>
 

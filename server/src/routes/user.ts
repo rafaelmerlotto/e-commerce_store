@@ -1,10 +1,11 @@
 import express, { Router, Response, Request } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import bcrypt, { compareSync } from 'bcrypt';
 import { prisma } from '../utils/prisma';
 import { JwtKey, User } from '@prisma/client';
 import { getToken } from '../utils/key';
 import { configDotenv } from 'dotenv';
+import { checkJwt } from '../utils/checkJwt';
 
 
 
@@ -49,7 +50,7 @@ user.post('/login', async (req: Request, res: Response) => {
     }
     const token: string = await generateJwt(user)
 
-    return res.status(200).send({ msg: `Hello ${user.fulName}`, valid: true, accessToken: token })
+    return res.status(200).send({ msg: `Hello ${user.fullName}`, valid: true, accessToken: token })
 })
 
 
@@ -62,17 +63,42 @@ user.post('/register', async (req: Request, res: Response) => {
         data: {
             email: email,
             password: passwordHash,
-            fulName: fullName
+            fullName: fullName
         }
     })
     if (!user) {
         return res.status(403).send({ msg: 'Cannot register User', valid: false })
     }
-    return res.status(201).send({ msg: `Hello ${user.fulName}, welcome!`, valid: true })
+    return res.status(201).send({ msg: `Hello ${user.fullName}, welcome!`, valid: true })
 })
 
 
-
+user.post("/info", async (req:Request, res: Response) => {
+    const {email, fullName} = req.body;
+    const accessToken = req.headers.authorization
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ msg: "Token not valid", valid: false });
+    }
+    const userId: string = payload.userId
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        }
+    })
+    if (!user) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    const infoUser : User | null  = await prisma.user.findUnique({
+        where:{
+            id: user.id
+        }
+    })
+    if (!user) {
+        return res.status(403).send({ msg: 'Cannot get info User', valid: false })
+    }
+    return res.status(201).send({ msg: infoUser, valid: true })
+})
 
 
 export { user }
